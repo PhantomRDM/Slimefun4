@@ -83,7 +83,7 @@ public class ProgrammableAndroid extends SlimefunItem implements InventoryBlock,
         texture = item.getSkullTexture().orElse(null);
         registerDefaultFuelTypes();
 
-        new BlockMenuPreset(getId(), "Programmable Android") {
+        new BlockMenuPreset(getId(), "可編輯的機器人") {
 
             @Override
             public void init() {
@@ -103,7 +103,7 @@ public class ProgrammableAndroid extends SlimefunItem implements InventoryBlock,
 
             @Override
             public void newInstance(BlockMenu menu, Block b) {
-                menu.replaceExistingItem(15, new CustomItem(HeadTexture.SCRIPT_START.getAsItemStack(), "&aStart/Continue"));
+                menu.replaceExistingItem(15, new CustomItem(HeadTexture.SCRIPT_START.getAsItemStack(), "&a啟動/繼續"));
                 menu.addMenuClickHandler(15, (p, slot, item, action) -> {
                     SlimefunPlugin.getLocalization().sendMessage(p, "android.started", true);
                     BlockStorage.addBlockInfo(b, "paused", "false");
@@ -111,14 +111,14 @@ public class ProgrammableAndroid extends SlimefunItem implements InventoryBlock,
                     return false;
                 });
 
-                menu.replaceExistingItem(17, new CustomItem(HeadTexture.SCRIPT_PAUSE.getAsItemStack(), "&4Pause"));
+                menu.replaceExistingItem(17, new CustomItem(HeadTexture.SCRIPT_PAUSE.getAsItemStack(), "&4暫停"));
                 menu.addMenuClickHandler(17, (p, slot, item, action) -> {
                     BlockStorage.addBlockInfo(b, "paused", "true");
                     SlimefunPlugin.getLocalization().sendMessage(p, "android.stopped", true);
                     return false;
                 });
 
-                menu.replaceExistingItem(16, new CustomItem(HeadTexture.ENERGY_REGULATOR.getAsItemStack(), "&bMemory Core", "", "&8\u21E8 &7Click to open the Script Editor"));
+                menu.replaceExistingItem(16, new CustomItem(HeadTexture.ENERGY_REGULATOR.getAsItemStack(), "&b記憶核心", "", "&8\u21E8 &7點擊開啟程式編輯器"));
                 menu.addMenuClickHandler(16, (p, slot, item, action) -> {
                     BlockStorage.addBlockInfo(b, "paused", "true");
                     SlimefunPlugin.getLocalization().sendMessage(p, "android.stopped", true);
@@ -201,7 +201,7 @@ public class ProgrammableAndroid extends SlimefunItem implements InventoryBlock,
         case 3:
             return AndroidFuelSource.NUCLEAR;
         default:
-            throw new IllegalStateException("Cannot convert the following Android tier to a fuel type: " + getTier());
+            throw new IllegalStateException("無法將以下機器人轉換為燃料類型: " + getTier());
         }
     }
 
@@ -245,7 +245,7 @@ public class ProgrammableAndroid extends SlimefunItem implements InventoryBlock,
                 boolean hasFreeSlot = script.length < 54;
 
                 if (hasFreeSlot) {
-                    menu.addItem(i, new CustomItem(HeadTexture.SCRIPT_NEW.getAsItemStack(), "&7> Add new Command"));
+                    menu.addItem(i, new CustomItem(HeadTexture.SCRIPT_NEW.getAsItemStack(), "&7> 新增指令"));
                     menu.addMenuClickHandler(i, (pl, slot, item, action) -> {
                         editInstruction(pl, b, script, index);
                         return false;
@@ -262,7 +262,7 @@ public class ProgrammableAndroid extends SlimefunItem implements InventoryBlock,
                 Instruction instruction = Instruction.getInstruction(script[i]);
 
                 if (instruction == null) {
-                    SlimefunPlugin.instance().getLogger().log(Level.WARNING, "Failed to parse Android instruction: {0}, maybe your server is out of date?", script[i]);
+                    SlimefunPlugin.instance().getLogger().log(Level.WARNING, "無法解析機器人指令: {0}, 也許插件版本不是最新?", script[i]);
                     return;
                 }
 
@@ -374,7 +374,7 @@ public class ProgrammableAndroid extends SlimefunItem implements InventoryBlock,
             return false;
         });
 
-        menu.addItem(48, new CustomItem(HeadTexture.SCRIPT_UP.getAsItemStack(), "&eUpload a Script", "", "&6Click &7to upload your Android's Script", "&7to the Server's database"));
+        menu.addItem(48, new CustomItem(HeadTexture.SCRIPT_UP.getAsItemStack(), "&e上傳程式", "", "&6點擊&7上傳你的機器人程式", "&7到伺服器資料庫"));
         menu.addMenuClickHandler(48, (pl, slot, item, action) -> {
             uploadScript(pl, b, page);
             return false;
@@ -392,7 +392,7 @@ public class ProgrammableAndroid extends SlimefunItem implements InventoryBlock,
             return false;
         });
 
-        menu.addItem(53, new CustomItem(HeadTexture.SCRIPT_LEFT.getAsItemStack(), "&6> Back", "", "&7Return to the Android's interface"));
+        menu.addItem(53, new CustomItem(HeadTexture.SCRIPT_LEFT.getAsItemStack(), "&6> 返回", "", "&7返回的機器人編輯介面"));
         menu.addMenuClickHandler(53, (pl, slot, item, action) -> {
             openScriptEditor(pl, b);
             return false;
@@ -425,7 +425,7 @@ public class ProgrammableAndroid extends SlimefunItem implements InventoryBlock,
                             openScriptEditor(player, b);
                         }
                     } catch (Exception x) {
-                        SlimefunPlugin.logger().log(Level.SEVERE, "An Exception was thrown when a User tried to download a Script!", x);
+                        SlimefunPlugin.logger().log(Level.SEVERE, "玩家嘗試下載程式時發生異常!", x);
                     }
 
                     return false;
@@ -469,25 +469,25 @@ public class ProgrammableAndroid extends SlimefunItem implements InventoryBlock,
         ChestMenu menu = new ChestMenu(ChatColor.DARK_AQUA + SlimefunPlugin.getLocalization().getMessage(p, "android.scripts.editor"));
         menu.setEmptySlotsClickable(false);
 
-        menu.addItem(1, new CustomItem(HeadTexture.SCRIPT_FORWARD.getAsItemStack(), "&2> Edit Script", "", "&aEdits your current Script"));
+        menu.addItem(1, new CustomItem(HeadTexture.SCRIPT_FORWARD.getAsItemStack(), "&2> 編輯程式", "", "&a編輯你目前的程式"));
         menu.addMenuClickHandler(1, (pl, slot, item, action) -> {
             openScript(pl, b, getScript(b.getLocation()));
             return false;
         });
 
-        menu.addItem(3, new CustomItem(HeadTexture.SCRIPT_NEW.getAsItemStack(), "&4> Create new Script", "", "&cDeletes your current Script", "&cand creates a blank one"));
+        menu.addItem(3, new CustomItem(HeadTexture.SCRIPT_NEW.getAsItemStack(), "&4> 建立新程式", "", "&c刪除你目前使用的程式", "&c並創建一個空白程式"));
         menu.addMenuClickHandler(3, (pl, slot, item, action) -> {
             openScript(pl, b, DEFAULT_SCRIPT);
             return false;
         });
 
-        menu.addItem(5, new CustomItem(HeadTexture.SCRIPT_DOWN.getAsItemStack(), "&6> Download a Script", "", "&eDownload a Script from the Server", "&eYou can edit or simply use it"));
+        menu.addItem(5, new CustomItem(HeadTexture.SCRIPT_DOWN.getAsItemStack(), "&6> 下載程式", "", "&e從伺服器上下載玩家上傳的程式", "&e您可以編輯或直接使用它"));
         menu.addMenuClickHandler(5, (pl, slot, item, action) -> {
             openScriptDownloader(pl, b, 1);
             return false;
         });
 
-        menu.addItem(8, new CustomItem(HeadTexture.SCRIPT_LEFT.getAsItemStack(), "&6> Back", "", "&7Return to the Android's interface"));
+        menu.addItem(8, new CustomItem(HeadTexture.SCRIPT_LEFT.getAsItemStack(), "&6> 返回", "", "&7返回的機器人編輯介面"));
         menu.addMenuClickHandler(8, (pl, slot, item, action) -> {
             BlockStorage.getInventory(b).open(p);
             return false;
@@ -518,7 +518,7 @@ public class ProgrammableAndroid extends SlimefunItem implements InventoryBlock,
         ChestMenuUtils.drawBackground(menu, 0, 1, 2, 3, 4, 5, 6, 7, 8);
 
         menu.setEmptySlotsClickable(false);
-        menu.addItem(9, new CustomItem(HeadTexture.SCRIPT_PAUSE.getAsItemStack(), "&fDo nothing"), (pl, slot, item, action) -> {
+        menu.addItem(9, new CustomItem(HeadTexture.SCRIPT_PAUSE.getAsItemStack(), "&f沒有做任何事"), (pl, slot, item, action) -> {
             String code = deleteInstruction(script, index);
             setScript(b.getLocation(), code);
             openScript(p, b, code);
@@ -550,9 +550,9 @@ public class ProgrammableAndroid extends SlimefunItem implements InventoryBlock,
     public void setScript(@Nonnull Location l, @Nonnull String script) {
         Validate.notNull(l, "Location for android not specified");
         Validate.notNull(script, "No script given");
-        Validate.isTrue(script.startsWith(Instruction.START.name() + '-'), "A script must begin with a 'START' token.");
-        Validate.isTrue(script.endsWith('-' + Instruction.REPEAT.name()), "A script must end with a 'REPEAT' token.");
-        Validate.isTrue(PatternUtils.DASH.split(script).length <= MAX_SCRIPT_LENGTH, "Scripts may not have more than " + MAX_SCRIPT_LENGTH + " segments");
+        Validate.isTrue(script.startsWith(Instruction.START.name() + '-'), "程式必須以「START」為開頭。");
+        Validate.isTrue(script.endsWith('-' + Instruction.REPEAT.name()), "程式必須以「REPEAT」為結尾。");
+        Validate.isTrue(PatternUtils.DASH.split(script).length <= MAX_SCRIPT_LENGTH, "程式不得超過 " + MAX_SCRIPT_LENGTH + " 段");
 
         BlockStorage.addBlockInfo(l, "script", script);
     }
@@ -595,7 +595,7 @@ public class ProgrammableAndroid extends SlimefunItem implements InventoryBlock,
     }
 
     public void registerFuelType(@Nonnull MachineFuel fuel) {
-        Validate.notNull(fuel, "Cannot register null as a Fuel type");
+        Validate.notNull(fuel, "無法將null做為燃料類型");
 
         fuelTypes.add(fuel);
     }
@@ -613,7 +613,7 @@ public class ProgrammableAndroid extends SlimefunItem implements InventoryBlock,
             ItemStack item = fuel.getInput().clone();
             ItemMeta im = item.getItemMeta();
             List<String> lore = new ArrayList<>();
-            lore.add(ChatColors.color("&8\u21E8 &7Lasts " + NumberUtils.getTimeLeft(fuel.getTicks() / 2)));
+            lore.add(ChatColors.color("&8\u21E8 &7持續時間 " + NumberUtils.getTimeLeft(fuel.getTicks() / 2)));
             im.setLore(lore);
             item.setItemMeta(im);
             list.add(item);
@@ -664,7 +664,7 @@ public class ProgrammableAndroid extends SlimefunItem implements InventoryBlock,
                 Instruction instruction = Instruction.getInstruction(script[index]);
 
                 if (instruction == null) {
-                    SlimefunPlugin.instance().getLogger().log(Level.WARNING, "Failed to parse Android instruction: {0}, maybe your server is out of date?", script[index]);
+                    SlimefunPlugin.instance().getLogger().log(Level.WARNING, "無法解析機器人指令: {0}, 也許您的插件不是最新？", script[index]);
                     return;
                 }
 
@@ -863,27 +863,27 @@ public class ProgrammableAndroid extends SlimefunItem implements InventoryBlock,
     }
 
     protected void attack(Block b, BlockFace face, Predicate<LivingEntity> predicate) {
-        throw new UnsupportedOperationException("Non-butcher Android tried to butcher!");
+        throw new UnsupportedOperationException("錯誤!非屠夫機器人試圖宰殺!");
     }
 
     protected void fish(Block b, BlockMenu menu) {
-        throw new UnsupportedOperationException("Non-fishing Android tried to fish!");
+        throw new UnsupportedOperationException("錯誤!非釣魚機器人試圖釣魚！");
     }
 
     protected void dig(Block b, BlockMenu menu, Block block) {
-        throw new UnsupportedOperationException("Non-mining Android tried to mine!");
+        throw new UnsupportedOperationException("錯誤!非挖礦機器人試圖挖礦！");
     }
 
     protected void moveAndDig(Block b, BlockMenu menu, BlockFace face, Block block) {
-        throw new UnsupportedOperationException("Non-mining Android tried to mine!");
+        throw new UnsupportedOperationException("錯誤!非挖礦機器人試圖挖礦！");
     }
 
     protected boolean chopTree(Block b, BlockMenu menu, BlockFace face) {
-        throw new UnsupportedOperationException("Non-woodcutter Android tried to chop a Tree!");
+        throw new UnsupportedOperationException("錯誤!非伐木機器人試圖砍樹！");
     }
 
     protected void farm(Block b, BlockMenu menu, Block block, boolean isAdvanced) {
-        throw new UnsupportedOperationException("Non-farming Android tried to farm!");
+        throw new UnsupportedOperationException("錯誤!非農夫機器人試圖種田！");
     }
 
 }
