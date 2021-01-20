@@ -130,19 +130,19 @@ public final class Script {
     @Nonnull
     ItemStack getAsItemStack(@Nonnull ProgrammableAndroid android, @Nonnull Player p) {
         List<String> lore = new LinkedList<>();
-        lore.add("&7by &f" + getAuthor());
+        lore.add("&7上傳者 &f" + getAuthor());
         lore.add("");
-        lore.add("&7Downloads: &f" + getDownloads());
-        lore.add("&7Rating: " + getScriptRatingPercentage());
+        lore.add("&7下載次數: &f" + getDownloads());
+        lore.add("&7評價: " + getScriptRatingPercentage());
         lore.add("&a" + getUpvotes() + " \u263A &7| &4\u2639 " + getDownvotes());
         lore.add("");
-        lore.add("&eLeft Click &fto download this Script");
-        lore.add("&4(This will override your current Script)");
+        lore.add("&e左鍵&f下載此程式");
+        lore.add("&4(警告!這將覆蓋您當前使用的程式)");
 
         if (canRate(p)) {
             lore.add("");
-            lore.add("&eShift + Left Click &fto leave a positive Rating");
-            lore.add("&eShift + Right Click &fto leave a negative Rating");
+            lore.add("&eShift + 左鍵 &f留下正面評價");
+            lore.add("&eShift + 右鍵 &f留下負面評價");
         }
 
         return new CustomItem(android.getItem(), "&b" + getName(), lore.toArray(new String[0]));
@@ -244,7 +244,7 @@ public final class Script {
                         scripts.add(new Script(config));
                     }
                 } catch (Exception x) {
-                    SlimefunPlugin.logger().log(Level.SEVERE, x, () -> "An Exception occurred while trying to load Android Script '" + file.getName() + "'");
+                    SlimefunPlugin.logger().log(Level.SEVERE, x, () -> "嘗試加載機器人程式時發生異常!" + file.getName() + "'");
                 }
             }
         }
