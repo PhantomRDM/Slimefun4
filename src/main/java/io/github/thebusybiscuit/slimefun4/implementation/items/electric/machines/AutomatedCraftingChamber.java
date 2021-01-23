@@ -60,7 +60,7 @@ public abstract class AutomatedCraftingChamber extends SlimefunItem implements I
     public AutomatedCraftingChamber(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);
 
-        new BlockMenuPreset(getId(), "&6Automated Crafting Chamber") {
+        new BlockMenuPreset(getId(), "&6自動製作室r") {
 
             @Override
             public void init() {
@@ -70,14 +70,14 @@ public abstract class AutomatedCraftingChamber extends SlimefunItem implements I
             @Override
             public void newInstance(BlockMenu menu, Block b) {
                 if (!BlockStorage.hasBlockInfo(b) || BlockStorage.getLocationInfo(b.getLocation(), "enabled") == null || BlockStorage.getLocationInfo(b.getLocation(), "enabled").equals(String.valueOf(false))) {
-                    menu.replaceExistingItem(6, new CustomItem(Material.GUNPOWDER, "&7Enabled: &4\u2718", "", "&e> Click to enable this Machine"));
+                    menu.replaceExistingItem(6, new CustomItem(Material.GUNPOWDER, "&7啟用: &4\u2718", "", "&e> 點擊啟動機器"));
                     menu.addMenuClickHandler(6, (p, slot, item, action) -> {
                         BlockStorage.addBlockInfo(b, "enabled", String.valueOf(true));
                         newInstance(menu, b);
                         return false;
                     });
                 } else {
-                    menu.replaceExistingItem(6, new CustomItem(Material.REDSTONE, "&7Enabled: &2\u2714", "", "&e> Click to disable this Machine"));
+                    menu.replaceExistingItem(6, new CustomItem(Material.REDSTONE, "&7啟用: &2\u2714", "", "&e> 點擊關閉機器"));
                     menu.addMenuClickHandler(6, (p, slot, item, action) -> {
                         BlockStorage.addBlockInfo(b, "enabled", String.valueOf(false));
                         newInstance(menu, b);
@@ -85,7 +85,7 @@ public abstract class AutomatedCraftingChamber extends SlimefunItem implements I
                     });
                 }
 
-                menu.replaceExistingItem(7, new CustomItem(Material.CRAFTING_TABLE, "&7Craft Last", "", "&e> Click to craft the last shaped recipe", "&cOnly works with the last one"));
+                menu.replaceExistingItem(7, new CustomItem(Material.CRAFTING_TABLE, "&7保留最後一份材料", "", "&e> 點擊保留最後一份材料", "&c僅適用最後的合成配方"));
                 menu.addMenuClickHandler(7, (p, slot, item, action) -> {
                     tick(b, true);
                     return false;
@@ -187,7 +187,7 @@ public abstract class AutomatedCraftingChamber extends SlimefunItem implements I
             });
         }
 
-        preset.addItem(2, new CustomItem(new ItemStack(Material.CRAFTING_TABLE), "&eRecipe", "", "&bPut in the Recipe you want to craft", "&4Enhanced Crafting Table Recipes ONLY"), (p, slot, item, action) -> false);
+        preset.addItem(2, new CustomItem(new ItemStack(Material.CRAFTING_TABLE), "&e合成配方", "", "&b將合成配方的材料放在下方", "&4只能合成進階工作台可以合成的物品"), (p, slot, item, action) -> false);
     }
 
     public abstract int getEnergyConsumption();
