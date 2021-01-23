@@ -50,14 +50,14 @@ public abstract class AbstractMonsterSpawner extends SlimefunItem {
      */
     @Nonnull
     public Optional<EntityType> getEntityType(@Nonnull ItemStack item) {
-        Validate.notNull(item, "The Item cannot be null");
+        Validate.notNull(item, "該項目不能是空的");
 
         ItemMeta meta = item.getItemMeta();
 
         // We may want to update this in the future to also make use of the BlockStateMeta
         for (String line : meta.getLore()) {
-            if (ChatColor.stripColor(line).startsWith("Type: ") && !line.contains("<Type>")) {
-                EntityType type = EntityType.valueOf(ChatColor.stripColor(line).replace("Type: ", "").replace(' ', '_').toUpperCase(Locale.ROOT));
+            if (ChatColor.stripColor(line).startsWith("類型: ") && !line.contains("<Type>")) {
+                EntityType type = EntityType.valueOf(ChatColor.stripColor(line).replace("類型: ", "").replace(' ', '_').toUpperCase(Locale.ROOT));
                 return Optional.of(type);
             }
         }
@@ -77,7 +77,7 @@ public abstract class AbstractMonsterSpawner extends SlimefunItem {
      */
     @Nonnull
     public ItemStack getItemForEntityType(@Nonnull EntityType type) {
-        Validate.notNull(type, "The EntityType cannot be null");
+        Validate.notNull(type, "實體類型不能是空的");
 
         ItemStack item = getItem().clone();
         ItemMeta meta = item.getItemMeta();
