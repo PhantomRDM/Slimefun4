@@ -38,14 +38,14 @@ public class CargoInputNode extends AbstractFilterNode {
 
         String roundRobinMode = BlockStorage.getLocationInfo(b.getLocation(), ROUND_ROBIN_MODE);
         if (!BlockStorage.hasBlockInfo(b) || roundRobinMode == null || roundRobinMode.equals(String.valueOf(false))) {
-            menu.replaceExistingItem(24, new CustomItem(HeadTexture.ENERGY_REGULATOR.getAsItemStack(), "&7Round-Robin Mode: &4\u2718", "", "&e> Click to enable Round Robin Mode", "&e(Items will be equally distributed on the Channel)"));
+            menu.replaceExistingItem(24, new CustomItem(HeadTexture.ENERGY_REGULATOR.getAsItemStack(), "&7循環模式: &4\u2718", "", "&e> 點擊啟用循環模式", "&e(物品將在頻道上平均分配)"));
             menu.addMenuClickHandler(24, (p, slot, item, action) -> {
                 BlockStorage.addBlockInfo(b, ROUND_ROBIN_MODE, String.valueOf(true));
                 updateBlockMenu(menu, b);
                 return false;
             });
         } else {
-            menu.replaceExistingItem(24, new CustomItem(HeadTexture.ENERGY_REGULATOR.getAsItemStack(), "&7Round-Robin Mode: &2\u2714", "", "&e> Click to disable Round Robin Mode", "&e(Items will be equally distributed on the Channel)"));
+            menu.replaceExistingItem(24, new CustomItem(HeadTexture.ENERGY_REGULATOR.getAsItemStack(), "&7循環模式: &2\u2714", "", "&e> 點擊禁用循環模式", "&e(物品將在頻道上平均分配)"));
             menu.addMenuClickHandler(24, (p, slot, item, action) -> {
                 BlockStorage.addBlockInfo(b, ROUND_ROBIN_MODE, String.valueOf(false));
                 updateBlockMenu(menu, b);
